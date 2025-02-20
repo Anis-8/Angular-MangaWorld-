@@ -3,16 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-commentaire',
+  selector: 'app-comment',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './commentaire.component.html',
-  styleUrl: './commentaire.component.css'
+  templateUrl: './comment.component.html',
+  styleUrl: './comment.component.css'
 })
-export class CommentaireComponent implements OnInit {
-  commentaires: any[] = [];
+export class CommentComponent implements OnInit {
+  comments: any[] = [];
   errorMessage: string | null = null;
-  private apiUrl = 'http://localhost:8000/api/commentaire'; // URL de l'API
+  private apiUrl = 'http://localhost:8000/api/comment'; // URL de l'API
   router: any;
 
   constructor(private http: HttpClient) {}
@@ -21,18 +21,18 @@ export class CommentaireComponent implements OnInit {
     this.loadArticles();
   }
 
-  trackById(index: number, commentaire: any): number {
-    return commentaire.id;
+  trackById(index: number, comment: any): number {
+    return comment.id;
   }
 
-  HomeRedirect():void{
-    this.router.navigate(['home'])
+  HomeRedirect(): void {
+    this.router.navigate(['/src/app/pages/home/home.component.html']);
   }
 
   loadArticles(): void {
     this.http.get<any[]>(`${this.apiUrl}/index`).subscribe({
       next: (data) => {
-        this.commentaires = data;
+        this.comments = data;
       },
       error: (error) => {
         console.error('Erreur lors du chargement des commentaires :', error);
@@ -41,11 +41,11 @@ export class CommentaireComponent implements OnInit {
     });
   }
 
-  deleteCommentaire(id: number): void {
+  deleteComment(id: number): void {
     if (confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')) {
       this.http.delete(`${this.apiUrl}/delete/${id}`).subscribe({
         next: () => {
-          this.commentaires = this.commentaires.filter(commentaire => commentaire.id !== id);
+          this.comments = this.comments.filter(comment => comment.id !== id);
         },
         error: (error) => {
           console.error('Erreur lors de la suppression du commentaire :', error);

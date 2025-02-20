@@ -19,13 +19,13 @@ export class LoginComponent {
 
   http= inject(HttpClient);
   router = inject(Router);
-  
+
   onLogin() {
     this.http.post("http://localhost:8000/api/login", this.logiObj).subscribe({
       next: (res: any) => {
         if (res.token) {
           localStorage.setItem('token',res.token);
-          alert("Login Success");
+          alert("Connexion réussie");
           this.router.navigateByUrl('home');
         } else {
           alert(res.message);
@@ -33,7 +33,7 @@ export class LoginComponent {
       },
       error: (error) => {
         console.error("Error:", error);
-        alert("An error occurred: " + error.message);
+        alert("Une erreur est survenue: " + error.message);
       }
     });
   }

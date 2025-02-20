@@ -16,6 +16,6 @@ export class HomeComponent {
   }
 
   CommentaireRedirect():void{
-    this.router.navigate(['commetaire'])
+    this.router.navigate(['comment'])
   }
 }
